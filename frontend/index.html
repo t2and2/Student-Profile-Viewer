@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GradScope</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="navbar-title" id="navbar-title">GradScope</div>
+    <div class="navbar-links">
+      <button onclick="authorizeAccess()" class="nav-btn">Authorized View</button>
+      <button onclick="goToPage('index')" class="nav-btn">Home</button>
+      <button onclick="goToPage('compare')" class="nav-btn">Compare</button>
+      <button onclick="goToPage('saved')" class="nav-btn">Saved</button>
+      <button onclick="goToPage('settings')" class="nav-btn">Settings</button>
+    </div>
+  </nav>
+
+  <div id="welcome-card" class="welcome-card">
+    <h2>Welcome to GradScope</h2>
+    <p>Explore, compare, and bookmark top student profiles from across the network.</p>
+    <button id="start-searching">Start Searching</button>
+  </div>
+
+  <div id="fullscreen-profile" class="fullscreen-modal hidden">
+    <button onclick="closeFullscreen()" class="close-fullscreen">Back</button>
+    <div id="fullscreen-content"></div>
+  </div>
+
+  <div class="search-container">
+    <h1 id="page-title" class="page-title">GradScope</h1>
+    <input type="text" id="searchInput" placeholder="Search for profiles">
+  </div>
+
+  <button id="filters-button">Filters</button>
+  <button id="clear-filters" class="hidden">Clear Filters</button>
+
+  <div id="filter-section" class="hidden">
+    <div class="filter-item">
+      <label for="degree-filter">Degree:</label>
+      <select id="degree-filter">
+        <option value="">All</option>
+        <option value="Architecture">Architecture</option>
+        <option value="Biology">Biology</option>
+        <option value="Business Administration">Business Administration</option>
+        <option value="Chemical Engineering">Chemical Engineering</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Data Science">Data Science</option>
+        <option value="Economics">Economics</option>
+        <option value="English">English</option>
+        <option value="History">History</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+        <option value="Physics">Physics</option>
+        <option value="Psychology">Psychology</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label for="gpa-filter">GPA:</label>
+      <input type="number" id="gpa-filter">
+    </div>
+
+    <div class="filter-item">
+      <label for="grad-year-filter">Graduation Year:</label>
+      <select id="grad-year-filter">
+        <option value="">All</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label for="certification-filter">Certifications:</label>
+      <select id="certification-filter">
+        <option value="">All</option>
+        <option value="Six Sigma">Six Sigma</option>
+        <option value="CFA">CFA</option>
+        <option value="Oracle Certified">Oracle Certified</option>
+        <option value="SCRUM Master">SCRUM Master</option>
+        <option value="PMP">PMP</option>
+        <option value="AWS Certified Developer">AWS Certified Developer</option>
+        <option value="Cisco CCNA">Cisco CCNA</option>
+        <option value="Google Cloud Certified">Google Cloud Certified</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label for="location-filter">Location:</label>
+      <select id="location-filter">
+        <option value="">All</option>
+        <option value="Chicago, IL">Chicago, IL</option>
+        <option value="Miami, FL">Miami, FL</option>
+        <option value="Atlanta, GA">Atlanta, GA</option>
+        <option value="New York, NY">New York, NY</option>
+        <option value="Seattle, WA">Seattle, WA</option>
+        <option value="Austin, TX">Austin, TX</option>
+        <option value="Denver, CO">Denver, CO</option>
+        <option value="Boston, MA">Boston, MA</option>
+        <option value="Los Angeles, CA">Los Angeles, CA</option>
+        <option value="San Francisco, CA">San Francisco, CA</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label for="organization-filter">Organizations:</label>
+      <select id="organization-filter">
+        <option value="">All</option>
+        <option value="Toastmasters">Toastmasters</option>
+        <option value="ACM Chapter">ACM Chapter</option>
+        <option value="IEEE">IEEE</option>
+        <option value="Chess Club">Chess Club</option>
+        <option value="Book Club">Book Club</option>
+        <option value="Women Who Code">Women Who Code</option>
+        <option value="Startup Club">Startup Club</option>
+      </select>
+    </div>
+
+    <button id="apply-filters">Apply Filters</button>
+  </div>
+
+  <div id="profiles-per-page-container">
+    <label for="profiles-per-page">Profiles per Page:</label>
+    <select id="profiles-per-page" onchange="updateProfilesPerPage()">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="all">All</option>
+    </select>
+  </div>
+
+  <div id="profile-container"></div>
+  <div id="pagination-container" class="pagination-container"></div>
+  <ul id="student-list"></ul>
+
+  <script src="index.js"></script>
+
+  <script>
+    if (localStorage.getItem("darkMode") === "enabled") {
+      document.body.classList.add("dark-mode");
+    }
+
+    const welcomeCard = document.getElementById("welcome-card");
+    const startBtn = document.getElementById("start-searching");
+
+    if (startBtn) {
+      startBtn.addEventListener("click", () => {
+        welcomeCard.classList.add("explode");
+
+        setTimeout(() => {
+          welcomeCard.remove();
+        }, 500);
+      });
+    }
+  </script>
+</body>
+</html>
