@@ -50,3 +50,5 @@ npm run backend
 npm run frontend
 http://127.0.0.1:8080
 
+## Demo Video
+[Watch Demo Video]https://drive.google.com/file/d/1dOd-Jyz5xBCutpO8ba3QAebN0J0dAMhK/view?usp=drive_link
